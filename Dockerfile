@@ -57,8 +57,4 @@ EXPOSE 8080
 ENV RUST_LOG=info
 ENV PATH="/usr/local/bin:${PATH}"
 
-# Create uploads directory with proper permissions
-RUN mkdir -p /app/uploads && \
-  chmod 777 /app/uploads
-
 CMD ["./blogpost"]
