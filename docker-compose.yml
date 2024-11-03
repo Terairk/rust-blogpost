@@ -1,0 +1,52 @@
+services:
+  web:
+    build: .
+    ports:
+      - "8080:8080"
+    environment:
+      - DATABASE_URL=postgres://postgres:postgres@db:5432/blog_db
+      - UPLOAD_DIR=/app/uploads
+      - RUST_LOG=debug
+    depends_on:
+      - db
+    volumes:
+      - ./templates:/app/templates
+      - ./migrations:/app/migrations
+      - uploads-data:/app/uploads
+    networks:
+      - app-network
+    restart: unless-stopped
+
+  db:
+    image: postgres:14
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=blog_db
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+      - ./migrations:/docker-entrypoint-initdb.d
+    networks:
+      - app-network
+    restart: unless-stopped
+
+  migration:
+    build: .
+    command: sqlx database create && sqlx migrate run
+    environment:
+      - DATABASE_URL=postgres://postgres:postgres@db:5432/blog_db
+    depends_on:
+      - db
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  postgres-data:
+  uploads-data:
+    driver: local
