@@ -14,8 +14,7 @@ A Rust implementation of a simple one page blog post feed.
 
 ## Prerequisites
 
-- Docker + Docker Compose
-- Potentially PostgreSQL (but should be handled by Docker)
+- Docker + Docker Compose (this can be done by installing Docker Desktop)
 
 ## Building Commands
 I used docker compose for handling building the main rust-web backend and the PostgreSQL database. The following commands are used for building and running the service.
