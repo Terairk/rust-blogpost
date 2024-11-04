@@ -40,5 +40,6 @@ docker compose down --volumes
 ```
 
 ## Running the application
-Open web browser and go to localhost:8080/home
+Open web browser and go to localhost:8080/home.
+
 You should then be able to fill in the form (use copy image address to get the link to a png from the web)
